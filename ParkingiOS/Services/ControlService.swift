@@ -3,10 +3,16 @@ import Foundation
 class ControlService {
     static let shared = ControlService()
     
-    func fetchTickets(estado: Int, sucursalId: Int, jwt: String, completion: @escaping (Result<[Ticket], Error>) -> Void) {
+    func fetchTickets(estado: Int,
+                      sucursalId: Int,
+                      jwt: String,
+                      completion: @escaping (Result<[Ticket], Error>) -> Void) {
+        
         let urlString = "http://186.4.230.233:8081/ParkingClub/tickets/estado/\(estado)/sucursal/\(sucursalId)"
         guard let url = URL(string: urlString) else {
-            completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "URL inválida"])))
+            completion(.failure(NSError(domain: "",
+                                        code: -1,
+                                        userInfo: [NSLocalizedDescriptionKey: "URL inválida"])))
             return
         }
         
@@ -21,14 +27,27 @@ class ControlService {
             }
             
             guard let data = data else {
-                completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "No se recibieron datos"])))
+                completion(.failure(NSError(domain: "",
+                                            code: -1,
+                                            userInfo: [NSLocalizedDescriptionKey: "No se recibieron datos"])))
                 return
             }
             
             do {
-                let tickets = try JSONDecoder().decode([Ticket].self, from: data)
+                // 1) Configurar JSONDecoder con un DateFormatter que acepte fracciones
+                let decoder = JSONDecoder()
+                let df = DateFormatter()
+                df.locale = Locale(identifier: "en_US_POSIX")
+                df.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+                decoder.dateDecodingStrategy = .formatted(df)
+                
+                // 2) Decodificar el arreglo de Tickets
+                let tickets = try decoder.decode([Ticket].self, from: data)
                 completion(.success(tickets))
+                
             } catch {
+                // Si falla, imprime el error para depuración
+                print("❌ Error al decodificar Tickets:", error)
                 completion(.failure(error))
             }
         }.resume()

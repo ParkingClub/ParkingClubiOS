@@ -10,6 +10,10 @@
 	<string>ParkingiOS</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+    <!-- Permiso Bluetooth necesario para CoreBluetooth -->
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Necesitamos usar Bluetooth para conectar a la impresora térmica.</string>
+
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>

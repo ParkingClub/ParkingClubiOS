@@ -10,7 +10,7 @@ import Foundation
 struct Ticket: Codable, Identifiable {
     let id: Int
     let placa: String
-    let hentrada: String
+    let hentrada: Date
     
     enum CodingKeys: String, CodingKey {
         case id

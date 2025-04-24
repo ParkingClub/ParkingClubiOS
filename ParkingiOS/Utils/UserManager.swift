@@ -13,6 +13,10 @@ class UserManager: ObservableObject {
         return userData["role"] as? String
     }
     
+    var mac: String? {
+        return userData["mac"] as? String
+    }
+    
     var idsucursal: Int? {
         return userData["idsucursal"] as? Int
     }

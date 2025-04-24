@@ -74,7 +74,8 @@ struct ControlView: View {
                             Text(viewModel.formatDate(ticket.hentrada))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             Button {
-                                print("Imprimir ticket \(ticket.id)")
+//                                
+                                viewModel.printTicket(ticket)
                             } label: {
                                 Image(systemName: "printer.fill")
                                     .foregroundColor(.red)
