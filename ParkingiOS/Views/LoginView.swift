@@ -49,7 +49,7 @@ struct LoginView: View {
                 
                 // ---------- BOTÓN ----------
                 Button(action: viewModel.login) {
-                    Text("Ingresar Aplicacion")
+                    Text("Ingresar")
                         .font(.headline)
                         .frame(maxWidth: .infinity)
                         .padding()
