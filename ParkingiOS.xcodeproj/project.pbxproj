@@ -6,12 +6,21 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0437AFCE2DBC2A6F00D5B2A6 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0437AFCD2DBC2A6F00D5B2A6 /* CoreBluetooth.framework */; };
+		0437AFD02DBC2A7B00D5B2A6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0437AFCF2DBC2A7B00D5B2A6 /* CFNetwork.framework */; };
+		0437AFD22DBC2A8400D5B2A6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0437AFD12DBC2A8400D5B2A6 /* SystemConfiguration.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		0437AFCD2DBC2A6F00D5B2A6 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		0437AFCF2DBC2A7B00D5B2A6 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		0437AFD12DBC2A8400D5B2A6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		049BD47D2DAEC6AE0093DCF2 /* ParkingiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParkingiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		045A399E2DB068B1008B3CF0 /* Exceptions for "ParkingiOS" folder in "ParkingiOS" target */ = {
+		0437B0172DBC35A800D5B2A6 /* Exceptions for "ParkingiOS" folder in "ParkingiOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				"Supporting Files/Info.plist",
@@ -21,10 +30,15 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0437B0152DBC2FE100D5B2A6 /* PrinterSDK */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = PrinterSDK;
+			sourceTree = "<group>";
+		};
 		049BD47F2DAEC6AE0093DCF2 /* ParkingiOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				045A399E2DB068B1008B3CF0 /* Exceptions for "ParkingiOS" folder in "ParkingiOS" target */,
+				0437B0172DBC35A800D5B2A6 /* Exceptions for "ParkingiOS" folder in "ParkingiOS" target */,
 			);
 			path = ParkingiOS;
 			sourceTree = "<group>";
@@ -36,17 +50,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0437AFD22DBC2A8400D5B2A6 /* SystemConfiguration.framework in Frameworks */,
+				0437AFD02DBC2A7B00D5B2A6 /* CFNetwork.framework in Frameworks */,
+				0437AFCE2DBC2A6F00D5B2A6 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0437AFCC2DBC2A6F00D5B2A6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0437AFD12DBC2A8400D5B2A6 /* SystemConfiguration.framework */,
+				0437AFCF2DBC2A7B00D5B2A6 /* CFNetwork.framework */,
+				0437AFCD2DBC2A6F00D5B2A6 /* CoreBluetooth.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		049BD4742DAEC6AE0093DCF2 = {
 			isa = PBXGroup;
 			children = (
 				049BD47F2DAEC6AE0093DCF2 /* ParkingiOS */,
+				0437AFCC2DBC2A6F00D5B2A6 /* Frameworks */,
 				049BD47E2DAEC6AE0093DCF2 /* Products */,
+				0437B0152DBC2FE100D5B2A6 /* PrinterSDK */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,6 +103,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				0437B0152DBC2FE100D5B2A6 /* PrinterSDK */,
 				049BD47F2DAEC6AE0093DCF2 /* ParkingiOS */,
 			);
 			name = ParkingiOS;
@@ -267,6 +297,7 @@
 				DEVELOPMENT_TEAM = 9UUB9BHB37;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/PrinterSDK/Headers/**";
 				INFOPLIST_FILE = "ParkingiOS/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -279,10 +310,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/PrinterSDK/**";
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.club.ParkingiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "ParkingiOS/Supporting Files/ParkingIOS-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -298,6 +332,7 @@
 				DEVELOPMENT_TEAM = 9UUB9BHB37;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/PrinterSDK/Headers/**";
 				INFOPLIST_FILE = "ParkingiOS/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -310,10 +345,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/PrinterSDK/**";
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.club.ParkingiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "ParkingiOS/Supporting Files/ParkingIOS-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
