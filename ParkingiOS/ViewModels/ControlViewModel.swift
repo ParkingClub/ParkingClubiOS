@@ -7,9 +7,13 @@ class ControlViewModel: ObservableObject {
     
     private let controlService = ControlService.shared
     private let userManager = UserManager.shared
-    private let printerSDK = PrinterSDKManager.shared
-    
     private let printerManager = BluetoothPrinterManager.shared
+    
+    //private let printerSDK = PrinterSDKManager.shared
+    
+    private var printerSDK: PrinterSDKManager {
+            PrinterSDKManager.shared
+    }
     
     func fetchTickets() {
         guard let jwt = LoginViewModel().getJWT() else {
