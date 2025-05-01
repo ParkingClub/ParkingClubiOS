@@ -10,6 +10,7 @@
 		0437AFCE2DBC2A6F00D5B2A6 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0437AFCD2DBC2A6F00D5B2A6 /* CoreBluetooth.framework */; };
 		0437AFD02DBC2A7B00D5B2A6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0437AFCF2DBC2A7B00D5B2A6 /* CFNetwork.framework */; };
 		0437AFD22DBC2A8400D5B2A6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0437AFD12DBC2A8400D5B2A6 /* SystemConfiguration.framework */; };
+		04E722DA2DC2C4AC00793EC6 /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 04E722D92DC2C4AC00793EC6 /* CodeScanner */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 				0437AFD22DBC2A8400D5B2A6 /* SystemConfiguration.framework in Frameworks */,
 				0437AFD02DBC2A7B00D5B2A6 /* CFNetwork.framework in Frameworks */,
 				0437AFCE2DBC2A6F00D5B2A6 /* CoreBluetooth.framework in Frameworks */,
+				04E722DA2DC2C4AC00793EC6 /* CodeScanner in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,6 +110,7 @@
 			);
 			name = ParkingiOS;
 			packageProductDependencies = (
+				04E722D92DC2C4AC00793EC6 /* CodeScanner */,
 			);
 			productName = ParkingiOS;
 			productReference = 049BD47D2DAEC6AE0093DCF2 /* ParkingiOS.app */;
@@ -137,6 +140,9 @@
 			);
 			mainGroup = 049BD4742DAEC6AE0093DCF2;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				04E722D82DC2C4AC00793EC6 /* XCRemoteSwiftPackageReference "CodeScanner" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 049BD47E2DAEC6AE0093DCF2 /* Products */;
 			projectDirPath = "";
@@ -310,7 +316,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/PrinterSDK/**";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/PrinterSDK/**",
+					"$(PROJECT_DIR)/PrinterSDK",
+				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.club.ParkingiOS;
@@ -345,7 +354,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/PrinterSDK/**";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/PrinterSDK/**",
+					"$(PROJECT_DIR)/PrinterSDK",
+				);
 				MARKETING_VERSION = 1.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.club.ParkingiOS;
@@ -379,6 +391,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		04E722D82DC2C4AC00793EC6 /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		04E722D92DC2C4AC00793EC6 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04E722D82DC2C4AC00793EC6 /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 049BD4752DAEC6AE0093DCF2 /* Project object */;
 }

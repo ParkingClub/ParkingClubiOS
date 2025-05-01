@@ -19,6 +19,12 @@ class UserManager: ObservableObject {
     var idsucursal: Int? {
         return userData["idsucursal"] as? Int
     }
+    
+    // ←– AÑADE ESTAS DOS:
+        /// El ID del empleado (se guardó en setUserData)
+        var idEmpleado: Int? { userData["idEmpleado"] as? Int }
+        /// El ID de la empresa (opcional)
+        var idempresa:  Int? { userData["idempresa"]  as? Int }
 
     // ————————————— NUEVO: UUID de la impresora BLE —————————————
     /// UUID persistente del periférico BLE que usas para imprimir
