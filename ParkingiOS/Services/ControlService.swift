@@ -1,6 +1,13 @@
 import Foundation
 
 class ControlService {
+    
+    struct Sucursal: Decodable {
+        let nombre: String
+        let ubicacion: String
+    }
+
+    
     static let shared = ControlService()
     
     func fetchTickets(estado: Int,
@@ -52,4 +59,38 @@ class ControlService {
             }
         }.resume()
     }
+    
+    
+    func fetchSucursal(sucursalId: Int,
+                         jwt: String,
+                         completion: @escaping (Result<Sucursal, Error>) -> Void) {
+        let urlString = "http://186.4.230.233:8081/ParkingClub/api/sucursales/sucursal/\(sucursalId)"
+        guard let url = URL(string: urlString) else {
+          completion(.failure(NSError(domain: "", code: -1,
+            userInfo: [NSLocalizedDescriptionKey: "URL inválida para sucursal"])))
+          return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("Bearer \(jwt)", forHTTPHeaderField: "Authorization")
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+          if let error = error {
+            completion(.failure(error)); return
+          }
+          guard let data = data else {
+            completion(.failure(NSError(domain: "", code: -1,
+              userInfo: [NSLocalizedDescriptionKey: "No se recibieron datos de sucursal"])))
+            return
+          }
+          do {
+            let decoder = JSONDecoder()
+            let sucursal = try decoder.decode(Sucursal.self, from: data)
+            completion(.success(sucursal))
+          } catch {
+            print("❌ Error decodificando Sucursal:", error)
+            completion(.failure(error))
+          }
+        }.resume()
+      }
 }
