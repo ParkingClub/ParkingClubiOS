@@ -64,7 +64,7 @@ class ControlService {
     func fetchSucursal(sucursalId: Int,
                          jwt: String,
                          completion: @escaping (Result<Sucursal, Error>) -> Void) {
-        let urlString = "http://186.4.230.233:8081/ParkingClub/api/sucursales/sucursal/\(sucursalId)"
+        let urlString = "http://186.4.230.233:8081/ParkingClub/sucursal/\(sucursalId)"
         guard let url = URL(string: urlString) else {
           completion(.failure(NSError(domain: "", code: -1,
             userInfo: [NSLocalizedDescriptionKey: "URL inválida para sucursal"])))

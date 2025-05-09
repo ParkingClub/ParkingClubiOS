@@ -7,16 +7,13 @@
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleName</key>
-	<string>ParkingiOS</string>
+	<string>ParkingClub</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-    <!-- Permiso Bluetooth necesario para CoreBluetooth -->
-    <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>Necesitamos usar Bluetooth para conectar a la impresora térmica.</string>
-    <!-- Permiso  necesario para camara -->
-    <key>NSCameraUsageDescription</key>
-    <string>Necesitamos acceder a la cámara para escanear el código QR de tu ticket.</string>
-
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Necesitamos usar Bluetooth para conectar a la impresora térmica.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Necesitamos acceder a la cámara para escanear el código QR de tu ticket.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>

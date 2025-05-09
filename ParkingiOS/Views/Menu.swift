@@ -85,7 +85,7 @@ struct MenuView: View {
             }
         }
         // 2) Oculta la barra de estado para que no quede espacio arriba
-        .statusBar(hidden: true)
+        //.statusBar(hidden: true)
     }
 }
 

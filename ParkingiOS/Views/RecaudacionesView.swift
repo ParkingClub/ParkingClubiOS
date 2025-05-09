@@ -17,40 +17,130 @@ enum DateFilter: String, CaseIterable, Identifiable {
     }
 }
 
-// ─── Desglose por empleado ─────────────────────────────
+// ─── Desglose por empleado, ahora con subtotales por tipo de pago ──
 struct EmployeeBreakdown: Identifiable {
     let id = UUID()
     let name: String
     let total: Double
     let tickets: Int
+    let efectivo: Double       // suma de pagos "E"
+    let transferencia: Double  // suma de pagos "T"
+    let tarjeta: Double        // suma de pagos "TC"
 }
 
 // ─── Modal sencillo de desglose ────────────────────────
+//private struct BreakdownView: View {
+//    let breakdown: [EmployeeBreakdown]
+//    @Environment(\.dismiss) private var dismiss
+//
+//    var body: some View {
+//        NavigationStack {
+//            List(breakdown) { row in
+//                VStack(alignment: .leading, spacing: 8) {
+//                    HStack {
+//                        Text(row.name).bold()
+//                        Spacer()
+//                        Text("$\(row.total, specifier: "%.2f")")
+//                    }
+//                    // Sub-desglose por forma de pago
+//                    HStack(spacing: 16) {
+//                        Text("Efectivo: $\(row.efectivo, specifier: "%.2f")")
+//                        Text("Transferencia: $\(row.transferencia, specifier: "%.2f")")
+//                        Text("Tarjeta: $\(row.tarjeta, specifier: "%.2f")")
+//                    }
+//                    .font(.caption)
+//                    .foregroundColor(.secondary)
+//                }
+//                .padding(.vertical, 4)
+//            }
+//            .navigationTitle("Por Empleado")
+//            .toolbar {
+//                ToolbarItem(placement: .confirmationAction) {
+//                    Button("Cerrar") { dismiss() }
+//                }
+//            }
+//        }
+//    }
+//}
 private struct BreakdownView: View {
     let breakdown: [EmployeeBreakdown]
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
-            List(breakdown) { row in
-                HStack {
-                    Text(row.name)
-                    Spacer()
-                    Text("$\(row.total, specifier: "%.2f")")
-                    Text("(\(row.tickets))")
-                        .foregroundColor(.secondary)
+            ScrollView {
+                VStack(spacing: 16) {
+                    ForEach(breakdown) { row in
+                        VStack(spacing: 12) {
+                            // Encabezado con nombre y total
+                            HStack {
+                                Text(row.name)
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                                Spacer()
+                                Text("$\(row.total, specifier: "%.2f")")
+                                    .font(.title3).bold()
+                                    .foregroundColor(.primary)
+                            }
+
+                            Divider()
+
+                            // Desglose por forma de pago
+                            HStack(spacing: 12) {
+                                paymentItem(label: "Efectivo", amount: row.efectivo, color: .green)
+                                paymentItem(label: "Transferencia", amount: row.transferencia, color: .blue)
+                                paymentItem(label: "Tarjeta", amount: row.tarjeta, color: .orange)
+                            }
+                        }
+                        .padding()
+                        .background(Color(.systemBackground))
+                        .cornerRadius(12)
+                        .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
+                        .padding(.horizontal)
+                    }
                 }
-                .padding(.vertical, 4)
+                .padding(.vertical)
             }
-            .navigationTitle("Por Empleado")
+            //.navigationTitle("Desglose")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
+                // 1) Título personalizado
+                    ToolbarItem(placement: .principal) {
+                        Text("Desglose")
+                            .font(.title2.weight(.bold))        // tipo y peso de fuente
+                            .foregroundColor(Color("Primary"))   // tu color personalizado
+                    }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Cerrar") { dismiss() }
+                    Button {
+                        dismiss()
+                    } label: {
+                        Label("Cerrar", systemImage: "xmark.circle.fill")
+                            .font(.body)
+                    }
+                    .tint(Color("Primary"))
                 }
             }
         }
     }
+
+    // Componente reutilizable para cada forma de pago
+    @ViewBuilder
+    private func paymentItem(label: String, amount: Double, color: Color) -> some View {
+        VStack(spacing: 4) {
+            Text(label)
+                .font(.caption).bold()
+                .foregroundColor(color)
+            Text("$\(amount, specifier: "%.2f")")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(8)
+        .background(color.opacity(0.1))
+        .cornerRadius(8)
+    }
 }
+
 
 // ─── Vista principal ───────────────────────────────────
 struct RecaudacionesView: View {
@@ -135,7 +225,7 @@ struct RecaudacionesView: View {
         .padding(.horizontal)
     }
 
-    // — Lista de tickets (ya filtrados por la API) —
+    // — Lista de tickets (pre-filtrada por API) —
     private var ticketList: some View {
         List(tickets) { t in
             HStack {
@@ -190,26 +280,32 @@ struct RecaudacionesView: View {
         }
     }
 
+    // — Cómputo del desglose por empleado y tipo de pago —
+    private func computeBreakdown() -> [EmployeeBreakdown] {
+        let grouped = Dictionary(grouping: tickets, by: { $0.empleadoCierre })
+        return grouped.map { name, list in
+            let totE  = list.filter { $0.tipoPago == "E"  }.reduce(0) { $0 + $1.monto }
+            let totT  = list.filter { $0.tipoPago == "T"  }.reduce(0) { $0 + $1.monto }
+            let totTC = list.filter { $0.tipoPago == "TC" }.reduce(0) { $0 + $1.monto }
+            let total = totE + totT + totTC
+            return EmployeeBreakdown(
+                name: name,
+                total: total,
+                tickets: list.count,
+                efectivo: totE,
+                transferencia: totT,
+                tarjeta: totTC
+            )
+        }
+        .sorted { $0.total > $1.total }
+    }
+
     // — Formateador de fecha reutilizable —
     private var dateFormatter: DateFormatter {
         let df = DateFormatter()
         df.dateStyle = .short
         df.timeStyle = .short
         return df
-    }
-
-    // — Cómputo del desglose por empleado —
-    private func computeBreakdown() -> [EmployeeBreakdown] {
-        let grouped = Dictionary(grouping: tickets, by: { $0.empleadoCierre })
-        return grouped.map { name, list in
-            let tot = list.reduce(0) { $0 + $1.monto }
-            return EmployeeBreakdown(
-                name: name,
-                total: tot,
-                tickets: list.count
-            )
-        }
-        .sorted { $0.total > $1.total }
     }
 }
 

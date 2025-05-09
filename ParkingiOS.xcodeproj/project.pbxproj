@@ -305,6 +305,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/PrinterSDK/Headers/**";
 				INFOPLIST_FILE = "ParkingiOS/Supporting Files/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = ParkingClub;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -343,6 +344,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/PrinterSDK/Headers/**";
 				INFOPLIST_FILE = "ParkingiOS/Supporting Files/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = ParkingClub;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
